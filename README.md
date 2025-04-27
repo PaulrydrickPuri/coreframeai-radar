@@ -1,77 +1,121 @@
-# CoreframeAI Radar
+# CoreframeAI Hashtag Trend Radar
 
-This is a minimal Next.js (App Router) application that serves content at https://radar.coreframeai.com.
+A real-time dashboard that tracks and displays hashtag trends across social media platforms, separating surface-level mass adoption trends from deeper builder-focused trends.
 
-## Getting Started
+## 🚀 Features
 
-### Prerequisites
+- **Dual-column Trend Dashboard**: Surface waves (mass adoption) and Builder currents (deep tech)
+- **Real-time Updates**: Auto-refreshes every 60 seconds
+- **Trend Simulation**: Hourly data generation via GitHub Actions
+- **Responsive Design**: Works on mobile and desktop
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 14 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Database**: SQLite (file-based, dev-only)
+- **State Management**: SWR for data fetching
+- **Deployment**: Vercel
+- **CI/CD**: GitHub Actions (hourly cron job)
+
+## 📋 Prerequisites
 
 - Node.js >= 20
 - pnpm package manager
 
+## 🚀 Getting Started
+
 ### Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/YourUsername/coreframeai-radar.git
+cd coreframeai-radar
+
 # Install dependencies
 pnpm install
 ```
 
 ### Development
 
-To run the development server:
-
 ```bash
+# Start the development server
 pnpm dev
+
+# Access the app at http://localhost:3000/radar
 ```
 
-Open [http://localhost:3000/radar](http://localhost:3000/radar) to view the page locally.
+### Running the Crawler Simulation
 
-### Production Build
+```bash
+# Generate fake trend data
+pnpm run crawler
+```
 
-To create a production build:
+### Building for Production
 
 ```bash
 pnpm build
-```
-
-To start the production server:
-
-```bash
 pnpm start
 ```
 
-## Deployment
+## 🏗️ Project Structure
 
-This project is configured to deploy automatically to Vercel when changes are pushed to the `main` branch.
+```
+.
+├── app/
+│   ├── radar/
+│   │   └── page.tsx          ← main dashboard (C)
+│   └── api/
+│       └── trends/route.ts   ← returns latest trend JSON
+├── crawler/
+│   ├── deepresearch_schema.ts  ← TYPE + JSON-Schema (A)
+│   ├── seeds.sample.json       ← sample input (A)
+│   └── simulate.ts             ← fake-data generator (B)
+├── data/
+│   ├── trends.sqlite           ← generated (git-ignored)
+│   └── fake_trends.json        ← generated hourly by simulate.ts (B)
+├── scripts/
+│   └── cron.sh                 ← GH-Actions entrypoint
+├── .github/workflows/cron.yml  ← hourly job
+├── next.config.js              ← host-based rewrite
+├── tailwind.config.ts
+└── README.md                   ← run + deploy docs
+```
+
+## 🔄 CI/CD Pipeline
+
+This project uses GitHub Actions for CI/CD:
+
+1. **Hourly Trend Simulation**: A GitHub Action runs every hour to generate new trend data
+2. **Vercel Integration**: Pushes to the `main` branch trigger automatic deployment
 
 ### How to Redeploy
 
-Simply push your changes to the `main` branch:
-
 ```bash
 git add .
-git commit -m "Your commit message"
+git commit -m "Your changes"
 git push
 ```
 
-Vercel will automatically build and deploy the changes.
+## 🌐 Domain Configuration
 
-## Vercel Configuration
+- **Development**: https://coreframeai-radar.vercel.app
+- **Production**: https://radar.coreframeai.com (CNAME already points to Vercel)
 
-- **Production Branch**: main
-- **Custom Domain**: radar.coreframeai.com (CNAME already points to Vercel)
+### Custom Domain Setup
 
-## Project Structure
+The CNAME for `radar.coreframeai.com` is already configured to point to Vercel. To complete the setup:
 
-```
-app/
-  radar/
-    page.tsx          ← returns minimal placeholder
-next.config.js        ← host-based rewrite
-package.json
-tsconfig.json
-.gitignore
-README.md
-```
+1. Go to your Vercel project settings
+2. Add `radar.coreframeai.com` as a custom domain
+3. Vercel will verify the DNS configuration
 
-The application is configured to serve the `/radar` route as the default document when accessed via the `radar.coreframeai.com` domain.
+## 📝 License
+
+This project is proprietary and confidential.
+
+---
+
+Built with ❤️ for CoreframeAI

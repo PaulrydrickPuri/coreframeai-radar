@@ -4,9 +4,15 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/',
-        destination: '/radar',
+        has: [{ type: 'host', value: 'radar.coreframeai.com' }],
+        source: '/:path*',
+        destination: '/radar/:path*'
       },
+      // Default rewrite for development and Vercel domain
+      {
+        source: '/',
+        destination: '/radar'
+      }
     ];
   },
 };

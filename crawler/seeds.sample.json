@@ -1,0 +1,8 @@
+{
+  "seed_hashtags": ["#ai", "#machinelearning", "#llm", "#finetuning"],
+  "target_keywords": ["LoRA", "RAG", "PEFT", "prompt engineering"],
+  "seed_accounts": ["@buildspace", "@huggingface", "@levelsio"],
+  "time_window": "P1D",
+  "content_type": ["text"],
+  "cooccurrence": [["#ai", "#nocode"], ["#llm", "#startup"]]
+}

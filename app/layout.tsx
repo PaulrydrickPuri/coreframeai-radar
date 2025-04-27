@@ -1,14 +1,15 @@
 import React, { ReactNode } from "react";
+import './globals.css';
 
 export const metadata = {
   title: 'CoreframeAI Radar',
-  description: 'Radar dashboard for CoreframeAI',
+  description: 'Hashtag Trend Radar for CoreframeAI',
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="bg-gray-50">{children}</body>
     </html>
   );
 }
