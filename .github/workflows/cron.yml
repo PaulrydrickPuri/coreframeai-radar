@@ -2,7 +2,7 @@ name: Hourly Trend Scraping
 
 on:
   schedule:
-    - cron: '0 */2 * * *'  # Run every 2 hours
+    - cron: '0 0 * * *'     # Run once every day at midnight UTC
   workflow_dispatch:     # Allow manual trigger
 
 jobs:
@@ -29,9 +29,11 @@ jobs:
       - name: Run scraper
         run: pnpm run scrape
         env:
+          # Required for Vercel Blob Storage integration
           BLOB_READ_WRITE_TOKEN: ${{ secrets.BLOB_READ_WRITE_TOKEN }}
+          # Polite scraping configuration
           USER_AGENT: 'CoreframeAI-Radar/1.0 (https://coreframeai.com/radar; radar@coreframeai.com)'
-          REQUEST_DELAY_MS: '2000'
+          REQUEST_DELAY_MS: '3000'
         
       - name: Commit JSON fallback file
         run: |
