@@ -6,12 +6,6 @@ const nextConfig = {
       {
         source: '/',
         destination: '/radar',
-        has: [
-          {
-            type: 'host',
-            value: 'radar.coreframeai.com',
-          },
-        ],
       },
     ];
   },

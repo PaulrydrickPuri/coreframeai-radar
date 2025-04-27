@@ -6,8 +6,8 @@ import { NextPage } from 'next';
 const RadarPage: NextPage = () => {
   // Return null or a minimal placeholder as specified
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <p>🚀 Radar is live</p>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
+      <p style={{ fontSize: '1.5rem' }}>🚀 Radar is live</p>
     </div>
   );
 };
