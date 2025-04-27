@@ -36,9 +36,10 @@ jobs:
           REQUEST_DELAY_MS: '3000'
         
       - name: Commit JSON fallback file
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add latest_trends.json
-          git commit -m "Update trend data fallback JSON [skip ci]" || echo "No changes to commit"
-          git push
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Update trend data fallback JSON [skip ci]"
+          file_pattern: "latest_trends.json"
+          commit_user_name: "GitHub Action"
+          commit_user_email: "action@github.com"
+          commit_author: "GitHub Action <action@github.com>"
