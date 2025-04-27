@@ -1,7 +1,11 @@
-/* 
- * Tailwind CSS directives
+/**
+ * Tailwind CSS module file
+ * 
  * These directives are processed by the PostCSS Tailwind plugin
+ * The following comments help suppress linting errors
  */
+
+/* Tailwind directives */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

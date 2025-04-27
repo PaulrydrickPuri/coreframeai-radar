@@ -8,8 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "crawler": "tsx crawler/simulate.ts",
-    "scrape": "tsx crawler/realScrape.ts"
+    "scrape": "tsx crawler/realScrape.ts",
+    "refresh": "curl -s http://localhost:3000/api/refresh"
   },
   "keywords": [],
   "author": "",
