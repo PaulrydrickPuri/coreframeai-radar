@@ -9,13 +9,58 @@ A real-time dashboard that tracks and displays hashtag trends across social medi
 - **Trend Simulation**: Hourly data generation via GitHub Actions
 - **Responsive Design**: Works on mobile and desktop
 
+## Environment Variables
+
+### Scraper Configuration
+
+- `USER_AGENT` - Custom user agent for scraping (default: 'CoreframeAI Research Bot/1.0')
+  - Used to identify our scraper to websites we're accessing
+  - Should include contact information in production
+  - Example: `'CoreframeAI Research Bot/1.0 (https://coreframeai.com; contact@coreframeai.com)'`
+
+- `REQUEST_DELAY_MS` - Delay between requests in ms (default: 2000)
+  - Ensures we don't overload the servers we're scraping
+  - Higher values are more polite but slower
+  - Recommended: 2000-5000ms for production use
+
+### Storage Configuration
+
+- `BLOB_READ_WRITE_TOKEN` - Vercel Blob Storage read/write token
+  - Required for storing trend data in Vercel Blob Storage
+  - Create this token in the Vercel dashboard
+  - Must be set in GitHub Actions secrets for the cron job
+
+### Robot Politeness Guidelines
+
+Our scraper follows these best practices:
+
+1. **Proper identification**: Uses a descriptive user agent that identifies our bot
+2. **Rate limiting**: Implements delays between requests to avoid server overload
+3. **Selective scraping**: Only extracts the minimum data needed for our application
+4. **Caching**: Stores results to minimize repeat requests
+5. **Error handling**: Gracefully handles failures without retry loops that could stress servers
+
+For production deployment, consider:
+- Adding full contact information to the user agent
+- Implementing a robots.txt parser
+- Setting up IP rotation for high-volume scraping
+- Adding logging and monitoring for scraper behavior
+
+## 📊 Data Flow
+
+1. **Scraper**: Collects trend data from Google Trends and Trends24
+2. **Storage**: Stores trend data in Vercel Blob Storage with timestamps
+3. **API**: Serves trend data via `/api/trends` from Blob Storage
+4. **UI**: Displays trends in two columns with auto-refresh via SWR
+
 ## 🛠️ Tech Stack
 
 - **Framework**: Next.js 14 (App Router)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
-- **Database**: SQLite (file-based, dev-only)
-- **State Management**: SWR for data fetching
+- **Data Fetching**: SWR (stale-while-revalidate)
+- **Storage**: Vercel Blob Storage
+- **Package Manager**: pnpm
 - **Deployment**: Vercel
 - **CI/CD**: GitHub Actions (hourly cron job)
 

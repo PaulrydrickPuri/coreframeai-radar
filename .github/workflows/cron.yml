@@ -1,12 +1,12 @@
-name: Hourly Trend Simulation
+name: Hourly Trend Scraping
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Run every hour
+    - cron: '0 */2 * * *'  # Run every 2 hours
   workflow_dispatch:     # Allow manual trigger
 
 jobs:
-  simulate-trends:
+  scrape:
     runs-on: ubuntu-latest
     
     steps:
@@ -26,18 +26,17 @@ jobs:
       - name: Install dependencies
         run: pnpm install
         
-      - name: Run trend simulation
-        run: pnpm run crawler
+      - name: Run scraper
+        run: pnpm run scrape
+        env:
+          BLOB_READ_WRITE_TOKEN: ${{ secrets.BLOB_READ_WRITE_TOKEN }}
+          USER_AGENT: 'CoreframeAI-Radar/1.0 (https://coreframeai.com/radar; radar@coreframeai.com)'
+          REQUEST_DELAY_MS: '2000'
         
-      - name: Commit changes
+      - name: Commit JSON fallback file
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add data/fake_trends.json
-          git commit -m "Update trend data [skip ci]" || echo "No changes to commit"
-          
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+          git add latest_trends.json
+          git commit -m "Update trend data fallback JSON [skip ci]" || echo "No changes to commit"
+          git push
